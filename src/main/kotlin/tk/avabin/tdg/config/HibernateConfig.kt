@@ -2,13 +2,13 @@ package tk.avabin.tdg.config
 
 import org.hibernate.SessionFactory
 import org.hibernate.cfg.AvailableSettings
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder
 import javax.sql.DataSource
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 
 
 /**
@@ -37,6 +37,6 @@ class HibernateConfig {
         dataSource.url = System.getenv("DATABASE_URL")
         dataSource.username = System.getenv("DATABASE_USERNAME")
         dataSource.password = System.getenv("DATABASE_PASSWORD")
-        return dataSource
+        return dataSource  :)
     }
 }
