@@ -1,0 +1,3 @@
+[submodule "RestPyTest"]
+	path = RestPyTest
+	url = https://github.com/Avabin/RestPyTest.git
