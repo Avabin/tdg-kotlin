@@ -24,7 +24,7 @@ class HibernateConfig {
         sessionBuilder.scanPackages("tk.avabin.tdg.beans.Entities")
         sessionBuilder.setProperty(AvailableSettings.DIALECT, "org.hibernate.dialect.PostgreSQL9Dialect")
         sessionBuilder.setProperty(AvailableSettings.USE_NEW_ID_GENERATOR_MAPPINGS, "false")
-        sessionBuilder.setProperty(AvailableSettings.HBM2DDL_AUTO, "update")
+        sessionBuilder.setProperty(AvailableSettings.HBM2DDL_AUTO, "create")
         // sessionBuilder.setProperty(AvailableSettings.SHOW_SQL, "true");
         // sessionBuilder.setProperty(AvailableSettings.FORMAT_SQL, "true");
         return sessionBuilder.buildSessionFactory()
@@ -37,6 +37,6 @@ class HibernateConfig {
         dataSource.url = System.getenv("DATABASE_URL")
         dataSource.username = System.getenv("DATABASE_USERNAME")
         dataSource.password = System.getenv("DATABASE_PASSWORD")
-        return dataSource  :)
+        return dataSource
     }
 }
