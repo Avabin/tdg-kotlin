@@ -1,18 +1,29 @@
 package tk.avabin.tdg.config
 
-import org.springframework.context.annotation.Configuration
-import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
-import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
+import org.springframework.boot.SpringBootConfiguration
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
-import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer
+import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler
 
-@Configuration
+@SpringBootConfiguration
 @EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-class ResourceServerOAuth2Config : GlobalMethodSecurityConfiguration() {
+class ResourceServerOAuth2Config : ResourceServerConfigurerAdapter() {
 
-    override fun createExpressionHandler(): MethodSecurityExpressionHandler {
-        return OAuth2MethodSecurityExpressionHandler()
+    @JvmField
+    final val RESOURCE_ID = "TDG_REST_API"
+
+    override fun configure(resources: ResourceServerSecurityConfigurer) {
+        resources.resourceId(RESOURCE_ID).stateless(false)
     }
+
+    override fun configure(http: HttpSecurity) {
+        http.anonymous().disable()
+            .requestMatchers().antMatchers("/admin/**")
+            .and().authorizeRequests()
+            .antMatchers("/admin/**").access("hasRole('ADMIN')")
+            .and().exceptionHandling().accessDeniedHandler(OAuth2AccessDeniedHandler())
+    }
+
 }

@@ -1,33 +1,23 @@
 package tk.avabin.tdg.config
 
-import org.hibernate.SessionFactory
 import org.hibernate.cfg.AvailableSettings
-import org.hibernate.jpa.internal.EntityManagerFactoryImpl
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
-import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder
+import org.springframework.boot.SpringBootConfiguration
 import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.core.io.ClassPathResource
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.jdbc.datasource.DriverManagerDataSource
 import org.springframework.jdbc.datasource.init.DataSourceInitializer
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator
-import org.springframework.orm.hibernate5.HibernateTransactionManager
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean
-import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter
 import org.springframework.transaction.annotation.EnableTransactionManagement
-import java.util.*
-import javax.persistence.EntityManagerFactory
-import javax.persistence.Persistence
+import java.util.Properties
 import javax.sql.DataSource
-
 
 /**
  * @author Avabin
  */
-@Configuration
+@SpringBootConfiguration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = arrayOf("tk.avabin.tdg.daos"))
 class HibernateConfig {
@@ -45,14 +35,6 @@ class HibernateConfig {
         sessionFactory.setAnnotatedPackages("tk.avabin.tdg.entities")
         sessionFactory.hibernateProperties = properties
         return sessionFactory
-    }
-
-    @Autowired
-    @Bean(name = arrayOf("transactionManager"))
-    fun getTransactionManager(dataSource: DataSource): HibernateTransactionManager {
-        val transactionManager = HibernateTransactionManager()
-        transactionManager.sessionFactory = getSessionFactory(dataSource).`object`
-        return transactionManager
     }
 
     @Bean

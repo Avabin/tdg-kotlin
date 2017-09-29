@@ -51,7 +51,7 @@ class UserEntityServiceImpl(
     }
 }
 
-@Service("userEntityService")
+@Service("userEntityDetailsService")
 @Transactional
 class UserEntityDetailsService(
     @Autowired private val userEntityService: UserEntityService,

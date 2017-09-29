@@ -40,8 +40,9 @@ open class InitialDataLoader : ApplicationListener<ContextRefreshedEvent> {
                 password = passwordEncoder.encode("testpass"),
                 roles = HashSet(setOf(adminRole, userRole))
             )
+            val usr = userEntityRepository.findOneByUsername(adminUser.username)
             logger.info("Admin added with username {}", adminUser.username)
-            userEntityRepository.save(adminUser)
+            if (usr == null) userEntityRepository.save(adminUser)
 
             alreadySetup = true
 

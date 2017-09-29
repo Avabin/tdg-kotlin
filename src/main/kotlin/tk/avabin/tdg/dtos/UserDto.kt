@@ -8,22 +8,24 @@ import java.io.Serializable
  * @author Avabin
  */
 data class UserDto(
-        var username: String = "",
-        private var _password: String = "",
-        var enabled: Boolean = true,
-        var accountNonLocked: Boolean = true,
-        var accountNonExpired: Boolean = true,
-        var credentialsNonExpired: Boolean = true,
-        var roles: Set<RoleDto> = HashSet()
+    var id: Int = 0,
+    var username: String = "",
+    private var _password: String = "",
+    var enabled: Boolean = true,
+    var accountNonLocked: Boolean = true,
+    var accountNonExpired: Boolean = true,
+    var credentialsNonExpired: Boolean = true,
+    var roles: Set<RoleDto> = HashSet()
 ) : Serializable {
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     var password = _password
         @JsonIgnore
-    get() = _password
+        get() = _password
         @JsonProperty
-    set(value) {
-        _password = value
-        field = value
-    }
+        set(value) {
+            _password = value
+            field = value
+        }
 
     override fun equals(other: Any?): Boolean {
         if(other!!::class == this::class) return false

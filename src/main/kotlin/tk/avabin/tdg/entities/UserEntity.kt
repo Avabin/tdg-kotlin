@@ -1,6 +1,5 @@
 package tk.avabin.tdg.entities
 
-import org.springframework.security.core.userdetails.User
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -34,11 +33,11 @@ data class UserEntity(
         ) {
     override fun equals(other: Any?): Boolean {
         if(other!!::class == UserEntity::class) return false
-        return (other as UserEntity).username == this.username
+        return (other as UserEntity).hashCode() == this.hashCode()
     }
 
     override fun hashCode(): Int {
-        val prime: Int = 61
+        val prime = 61
         return username.hashCode() * prime
     }
 

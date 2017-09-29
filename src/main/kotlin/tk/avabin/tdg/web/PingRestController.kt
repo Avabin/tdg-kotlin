@@ -1,4 +1,4 @@
-package tk.avabin.tdg.controllers
+package tk.avabin.tdg.web
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RestController

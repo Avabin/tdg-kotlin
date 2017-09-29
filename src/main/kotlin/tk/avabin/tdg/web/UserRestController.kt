@@ -1,11 +1,11 @@
-package tk.avabin.tdg.controllers
+package tk.avabin.tdg.web
 
 import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -52,5 +52,14 @@ class UserRestController (
         val user = userEntityService.getByName(username)
         return if(user != null) ResponseEntity(modelMapper.map(user, UserDto::class.java), HttpStatus.OK)
         else ResponseEntity(HttpStatus.NOT_FOUND)
+    }
+
+    @DeleteMapping("{username}")
+    fun delUser(@PathVariable username: String): ResponseEntity<Any> {
+        val user = userEntityService.getByName(username)
+        return if (user != null) {
+            userEntityService.delete(user)
+            ResponseEntity(HttpStatus.OK)
+        } else ResponseEntity(HttpStatus.NOT_FOUND)
     }
 }
